@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "ToDoItemTableViewCell.h"
+#import "ToDoItem.h"
 
 @interface ViewController ()
+@property (strong, nonatomic) NSMutableArray *toDoListArray;
 
 @end
 
@@ -16,12 +19,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.toDoListArray = [[NSMutableArray alloc] initWithCapacity:0];
+    ToDoItem *test = [ToDoItem new];
+    test.title = @"Blabla";
+    [self.toDoListArray addObject:test];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.toDoListArray count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ToDoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"toDoItemCell"];
+    ToDoItem *currentItem = self.toDoListArray[indexPath.row];
+    
+    cell.titleLabel.text = currentItem.title;
+    
+    return cell;
 }
 
 @end
