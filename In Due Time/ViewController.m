@@ -12,6 +12,8 @@
 
 @interface ViewController ()
 @property (strong, nonatomic) NSMutableArray *toDoListArray;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)addNewItem:(id)sender;
 
 @end
 
@@ -40,4 +42,38 @@
     return cell;
 }
 
+- (IBAction)addNewItem:(id)sender {
+    
+    UIAlertController *addNewItemAlertController = [UIAlertController alertControllerWithTitle:@"New ToDo" message:@"Add a title and a due date for your new ToDo" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    [addNewItemAlertController addAction:cancelAction];
+    
+    UIAlertAction *addAction = [UIAlertAction
+                               actionWithTitle:@"Add"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   ToDoItem *newItem = [ToDoItem new];
+                                   newItem.title = addNewItemAlertController.textFields.firstObject.text;
+                                   [self.toDoListArray addObject:newItem];
+                                   [self.tableView reloadData];
+                               }];
+    [addNewItemAlertController addAction:addAction];
+    
+    [addNewItemAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
+        
+        textField.placeholder = @"Title";
+        NSLog(@"Textfield configuration Handler");
+    }];
+    
+    [self presentViewController:addNewItemAlertController animated:YES completion:nil];
+    
+}
 @end

@@ -30,14 +30,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFY-EB-nvf">
-                                                    <rect key="frame" x="31" y="0.0" width="36" height="21"/>
+                                                    <rect key="frame" x="31" y="0.0" width="420" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mv2-Cc-xQr">
-                                                    <rect key="frame" x="31" y="22" width="36" height="21"/>
+                                                    <rect key="frame" x="31" y="22" width="420" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -69,8 +69,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="To Do" id="RCp-5R-tnx">
-                        <barButtonItem key="rightBarButtonItem" title="+" id="g3u-aJ-6T6"/>
+                        <barButtonItem key="rightBarButtonItem" title="+" id="g3u-aJ-6T6">
+                            <connections>
+                                <action selector="addNewItem:" destination="BYZ-38-t0r" id="gPu-qq-CAd"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="OAc-Zw-WeK" id="cYz-lZ-MPT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
