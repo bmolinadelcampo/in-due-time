@@ -11,5 +11,6 @@
 @interface ToDoItemTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dueByLabel;
 
 @end

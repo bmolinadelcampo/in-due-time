@@ -12,7 +12,9 @@
 
 - (void)awakeFromNib {
     self.titleLabel.text = nil;
-    self.dueDateLabel.text = nil;}
+    self.dueDateLabel.text = nil;
+    self.dueByLabel.text = nil;
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -24,6 +26,7 @@
 {
     self.titleLabel.text = nil;
     self.dueDateLabel.text = nil;
+    self.dueByLabel.text = nil;
 }
 
 @end

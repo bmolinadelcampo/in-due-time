@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		97D08BE91CBA971700422185 /* DatePickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D08BE81CBA971700422185 /* DatePickerTableViewCell.m */; };
 		97D5B80A1CB9778E00ADEF0D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D5B8091CB9778E00ADEF0D /* main.m */; };
 		97D5B80D1CB9778E00ADEF0D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D5B80C1CB9778E00ADEF0D /* AppDelegate.m */; };
 		97D5B8101CB9778E00ADEF0D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D5B80F1CB9778E00ADEF0D /* ViewController.m */; };
@@ -18,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		97D08BE71CBA971700422185 /* DatePickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerTableViewCell.h; sourceTree = "<group>"; };
+		97D08BE81CBA971700422185 /* DatePickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerTableViewCell.m; sourceTree = "<group>"; };
 		97D5B8051CB9778E00ADEF0D /* In Due Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "In Due Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D5B8091CB9778E00ADEF0D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		97D5B80B1CB9778E00ADEF0D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -70,6 +73,8 @@
 				97D5B80F1CB9778E00ADEF0D /* ViewController.m */,
 				97D5B81F1CB9787700ADEF0D /* ToDoItemTableViewCell.h */,
 				97D5B8201CB9787700ADEF0D /* ToDoItemTableViewCell.m */,
+				97D08BE71CBA971700422185 /* DatePickerTableViewCell.h */,
+				97D08BE81CBA971700422185 /* DatePickerTableViewCell.m */,
 				97D5B8221CB97D0700ADEF0D /* ToDoItem.h */,
 				97D5B8231CB97D0700ADEF0D /* ToDoItem.m */,
 				97D5B8111CB9778E00ADEF0D /* Main.storyboard */,
@@ -160,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97D5B8101CB9778E00ADEF0D /* ViewController.m in Sources */,
+				97D08BE91CBA971700422185 /* DatePickerTableViewCell.m in Sources */,
 				97D5B8241CB97D0700ADEF0D /* ToDoItem.m in Sources */,
 				97D5B80D1CB9778E00ADEF0D /* AppDelegate.m in Sources */,
 				97D5B8211CB9787700ADEF0D /* ToDoItemTableViewCell.m in Sources */,
@@ -310,6 +316,7 @@
 				97D5B81E1CB9778E00ADEF0D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

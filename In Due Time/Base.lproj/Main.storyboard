@@ -36,8 +36,15 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Due by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4RW-oV-RyC">
+                                                    <rect key="frame" x="31" y="22" width="59" height="21"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mv2-Cc-xQr">
-                                                    <rect key="frame" x="31" y="22" width="420" height="21"/>
+                                                    <rect key="frame" x="98" y="21" width="353" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -48,8 +55,39 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
+                                            <outlet property="dueByLabel" destination="4RW-oV-RyC" id="S1j-Nq-hwo"/>
                                             <outlet property="dueDateLabel" destination="mv2-Cc-xQr" id="6ur-sM-j6i"/>
                                             <outlet property="titleLabel" destination="QFY-EB-nvf" id="iSo-ep-zwJ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="datePickerCell" rowHeight="162" id="iTS-iN-Ikp" customClass="DatePickerTableViewCell">
+                                        <rect key="frame" x="0.0" y="136" width="600" height="162"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iTS-iN-Ikp" id="3WD-YX-dRP">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="162"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Llu-8b-lbG">
+                                                    <rect key="frame" x="0.0" y="-27" width="600" height="216"/>
+                                                    <animations/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="481986530.50439">
+                                                        <!--2016-04-10 13:08:50 +0000-->
+                                                    </date>
+                                                    <connections>
+                                                        <action selector="setDueDate:" destination="BYZ-38-t0r" eventType="valueChanged" id="9NB-Py-RYM"/>
+                                                    </connections>
+                                                </datePicker>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="Llu-8b-lbG" firstAttribute="centerY" secondItem="3WD-YX-dRP" secondAttribute="centerY" id="MoH-Bc-cRV"/>
+                                                <constraint firstItem="Llu-8b-lbG" firstAttribute="leading" secondItem="3WD-YX-dRP" secondAttribute="leading" id="bJc-8q-LS8"/>
+                                                <constraint firstAttribute="trailing" secondItem="Llu-8b-lbG" secondAttribute="trailing" id="uWC-n8-0QY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="datePicker" destination="Llu-8b-lbG" id="KGZ-Tv-h7j"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

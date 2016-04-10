@@ -10,6 +10,6 @@
 
 @interface ToDoItem : NSObject
 @property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSDate *dueDate;
+@property (strong, nonatomic) NSString *dueDate;
 
 @end
