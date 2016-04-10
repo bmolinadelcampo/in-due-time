@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ToDoItem : NSObject
+@interface ToDoItem : NSObject <NSCoding>
+
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *dueDate;
+@property BOOL isChecked;
 
 @end

@@ -11,14 +11,21 @@
 #import "ToDoItem.h"
 #import "DatePickerTableViewCell.h"
 
+#define kFileName @"savedData.plist"
+
 @interface ViewController ()
-@property (strong, nonatomic) NSMutableArray *toDoListArray;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) NSMutableArray *toDoListArray;
 @property (strong, nonatomic) NSIndexPath *datePickerIndexPath;
 @property BOOL hasInlinePicker;
 
 - (IBAction)addNewItem:(id)sender;
 - (IBAction)setDueDate:(id)sender;
+- (IBAction)changeCheckboxValue:(id)sender;
+
+- (NSURL *)pathToFile;
 
 @end
 
@@ -26,7 +33,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.toDoListArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
+    NSURL *filePathURL = [self pathToFile];
+//    self.toDoListArray = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathToFile].absoluteString];
+    
+    if ([[[NSFileManager alloc] init] fileExistsAtPath:[filePathURL path]]) {
+        self.toDoListArray = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathToFile].path];
+        
+    }else{
+        self.toDoListArray = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:[UIApplication sharedApplication]];
+    
     self.hasInlinePicker = NO;
     self.datePickerIndexPath = nil;
 }
@@ -35,6 +54,7 @@
 {
     if (self.hasInlinePicker) {
         return [self.toDoListArray count] + 1;
+        
     }else{
         return [self.toDoListArray count];
     }
@@ -42,51 +62,32 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = @"toDoItemCell";
     
     if (self.hasInlinePicker) {
         if ((indexPath.row == self.datePickerIndexPath.row + 1)) {
-            cellIdentifier = @"datePickerCell";
-            DatePickerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            DatePickerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"datePickerCell"];
            
             cell.datePicker.minimumDate = [NSDate date];
             
             return cell;
+            
         }else if (indexPath.row > self.datePickerIndexPath.row + 1){
-            ToDoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            ToDoItem *currentItem = self.toDoListArray[indexPath.row - 1];
+            return [self createCellForItem:self.toDoListArray[indexPath.row - 1] forTable:tableView];
             
-            cell.titleLabel.text = currentItem.title;
-            if (currentItem.dueDate) {
-                cell.dueDateLabel.text = currentItem.dueDate;
-                cell.dueByLabel.text = @"Due by: ";
-            }
-            
-            return cell;
         }else{
-            ToDoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            ToDoItem *currentItem = self.toDoListArray[indexPath.row];
-            
-            cell.titleLabel.text = currentItem.title;
-            if (currentItem.dueDate) {
-                cell.dueDateLabel.text = currentItem.dueDate;
-                cell.dueByLabel.text = @"Due by: ";
-            }
-            
-            return cell;
+            return [self createCellForItem:self.toDoListArray[indexPath.row] forTable:tableView];
         }
+        
     }else{
-        ToDoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        ToDoItem *currentItem = self.toDoListArray[indexPath.row];
-        
-        cell.titleLabel.text = currentItem.title;
-        if (currentItem.dueDate) {
-            cell.dueDateLabel.text = currentItem.dueDate;
-            cell.dueByLabel.text = @"Due by: ";
-        }
-        
-        return cell;
+        return [self createCellForItem:self.toDoListArray[indexPath.row] forTable:tableView];
     }
+}
+
+- (ToDoItemTableViewCell *)createCellForItem:(ToDoItem *)toDoItem forTable:(UITableView *)tableView
+{
+    ToDoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"toDoItemCell"];
+    cell.toDoItem = toDoItem;
+    return cell;
 }
 
 - (IBAction)addNewItem:(id)sender {
@@ -100,6 +101,7 @@
                                    {
                                        NSLog(@"Cancel action");
                                    }];
+    
     [addNewItemAlertController addAction:cancelAction];
     
     UIAlertAction *addAction = [UIAlertAction
@@ -131,6 +133,7 @@
             return 162;
         }
     }
+    
     return 60;
 }
 
@@ -139,6 +142,7 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell.reuseIdentifier isEqualToString:@"toDoItemCell"]) {
         [self displayInlineDatePickerForRowAtIndexPath: indexPath];
+        
     }else{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
@@ -151,27 +155,37 @@
     if (!self.hasInlinePicker) {
         NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]];
         [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        
         self.hasInlinePicker = YES;
+        
         self.datePickerIndexPath = indexPath;
+        
     }else if (self.hasInlinePicker && self.datePickerIndexPath.row == indexPath.row) {
         NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]];
         [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        
         self.hasInlinePicker = NO;
+        
         self.datePickerIndexPath = nil;
+        
     }else{
         NSArray *indexPaths = @[[NSIndexPath indexPathForRow:self.datePickerIndexPath.row + 1 inSection:0]];
         [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
         
         if (self.datePickerIndexPath.row < indexPath.row) {
             indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+            
         }else{
             indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]];
         }
         
         [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        
         self.hasInlinePicker = YES;
+        
         if (self.datePickerIndexPath.row < indexPath.row) {
             self.datePickerIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:0];
+            
         }else{
             self.datePickerIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
         }
@@ -192,5 +206,54 @@
     currentToDoItem.dueDate = [dateFormatter stringFromDate:sender.date];
     
     [self.tableView reloadData];
+}
+
+- (IBAction)changeCheckboxValue:(id)sender
+{
+    CGPoint checkboxPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:checkboxPosition];
+    ToDoItemTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    if (!cell.toDoItem.isChecked) {
+        UIImage *checkedCheckboxImage = [UIImage imageNamed:@"Checked Checkbox.png"];
+        [cell.checkBoxButton setImage:checkedCheckboxImage forState:normal];
+        cell.toDoItem.isChecked = YES;
+        
+    }else{
+        UIImage *uncheckedCheckboxImage = [UIImage imageNamed:@"Unchecked Checkbox.png"];
+        [cell.checkBoxButton setImage:uncheckedCheckboxImage forState:normal];
+        cell.toDoItem.isChecked = NO;
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    ToDoItemTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (cell.toDoItem.isChecked && !self.hasInlinePicker) {
+        return YES;
+        
+    }else{
+        return NO;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.toDoListArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (NSURL *)pathToFile
+{
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSError *err;
+    NSURL *documentURL = [fileManager URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&err];
+    return [documentURL URLByAppendingPathComponent:kFileName];
+}
+
+- (void)applicationDidEnterBackground: (NSNotification *)notification
+{
+    [NSKeyedArchiver archiveRootObject:self.toDoListArray toFile:[self pathToFile].path];
 }
 @end

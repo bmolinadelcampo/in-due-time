@@ -10,10 +10,23 @@
 
 @implementation ToDoItemTableViewCell
 
+- (void)setToDoItem:(ToDoItem *)toDoItem
+{
+    _toDoItem = toDoItem;
+    
+    self.titleLabel.text = toDoItem.title;
+    if (toDoItem.dueDate) {
+        self.dueDateLabel.text = toDoItem.dueDate;
+        self.dueByLabel.text = @"Due by: ";
+    }
+}
+
 - (void)awakeFromNib {
     self.titleLabel.text = nil;
     self.dueDateLabel.text = nil;
     self.dueByLabel.text = nil;
+    UIImage *initialCheckboxImage = [UIImage imageNamed:@"Unchecked Checkbox.png"];
+    [self.checkBoxButton setImage:initialCheckboxImage forState:UIControlStateNormal];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -27,6 +40,8 @@
     self.titleLabel.text = nil;
     self.dueDateLabel.text = nil;
     self.dueByLabel.text = nil;
+    UIImage *initialCheckboxImage = [UIImage imageNamed:@"Unchecked Checkbox.png"];
+    [self.checkBoxButton setImage:initialCheckboxImage forState:UIControlStateNormal];
 }
 
 @end

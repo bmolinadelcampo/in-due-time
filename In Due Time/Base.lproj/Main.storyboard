@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
-        <!--To Do-->
+        <!--To Do List-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -30,31 +30,40 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFY-EB-nvf">
-                                                    <rect key="frame" x="31" y="0.0" width="420" height="21"/>
+                                                    <rect key="frame" x="73" y="0.0" width="420" height="21"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mv2-Cc-xQr">
+                                                    <rect key="frame" x="140" y="21" width="353" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Due by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4RW-oV-RyC">
-                                                    <rect key="frame" x="31" y="22" width="59" height="21"/>
+                                                    <rect key="frame" x="73" y="22" width="59" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mv2-Cc-xQr">
-                                                    <rect key="frame" x="98" y="21" width="353" height="21"/>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uM2-ST-yjc">
+                                                    <rect key="frame" x="22" y="7" width="25" height="25"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <color key="tintColor" red="0.0" green="0.74117647058823533" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="changeCheckboxValue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Aw8-UQ-uiN"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <animations/>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
+                                            <outlet property="checkBoxButton" destination="uM2-ST-yjc" id="F9L-zx-QfM"/>
                                             <outlet property="dueByLabel" destination="4RW-oV-RyC" id="S1j-Nq-hwo"/>
                                             <outlet property="dueDateLabel" destination="mv2-Cc-xQr" id="6ur-sM-j6i"/>
                                             <outlet property="titleLabel" destination="QFY-EB-nvf" id="iSo-ep-zwJ"/>
@@ -106,8 +115,9 @@
                             <constraint firstItem="OAc-Zw-WeK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="rkw-mc-i0x"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="To Do" id="RCp-5R-tnx">
+                    <navigationItem key="navigationItem" title="To Do List" id="RCp-5R-tnx">
                         <barButtonItem key="rightBarButtonItem" title="+" id="g3u-aJ-6T6">
+                            <color key="tintColor" red="0.0" green="0.74117647060000003" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="addNewItem:" destination="BYZ-38-t0r" id="gPu-qq-CAd"/>
                             </connections>

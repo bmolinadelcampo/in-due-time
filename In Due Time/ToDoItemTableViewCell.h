@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ToDoItem.h"
 
 @interface ToDoItemTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueByLabel;
+@property (weak, nonatomic) IBOutlet UIButton *checkBoxButton;
+
+@property (strong ,nonatomic) ToDoItem *toDoItem;
 
 @end
