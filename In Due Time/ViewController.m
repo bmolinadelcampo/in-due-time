@@ -10,6 +10,7 @@
 #import "ToDoItemTableViewCell.h"
 #import "ToDoItem.h"
 #import "DatePickerTableViewCell.h"
+#import "DetailViewController.h"
 
 #define kFileName @"savedData.plist"
 
@@ -87,6 +88,7 @@
 {
     ToDoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"toDoItemCell"];
     cell.toDoItem = toDoItem;
+    cell.accessoryType = UITableViewCellAccessoryDetailButton;
     return cell;
 }
 
@@ -256,4 +258,17 @@
 {
     [NSKeyedArchiver archiveRootObject:self.toDoListArray toFile:[self pathToFile].path];
 }
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"showDetail" sender:[tableView cellForRowAtIndexPath:indexPath]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(ToDoItemTableViewCell *)sender
+{
+    DetailViewController *destinationViewController = segue.destinationViewController;
+    destinationViewController.toDoItem = sender.toDoItem;
+}
+
+
 @end

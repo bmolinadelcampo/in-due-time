@@ -16,6 +16,8 @@
 		97D5B8181CB9778E00ADEF0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97D5B8161CB9778E00ADEF0D /* LaunchScreen.storyboard */; };
 		97D5B8211CB9787700ADEF0D /* ToDoItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D5B8201CB9787700ADEF0D /* ToDoItemTableViewCell.m */; };
 		97D5B8241CB97D0700ADEF0D /* ToDoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D5B8231CB97D0700ADEF0D /* ToDoItem.m */; };
+		97ED06CC1CBD39CE006919B1 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97ED06CB1CBD39CE006919B1 /* DetailViewController.m */; };
+		97ED06D31CBD3F46006919B1 /* TitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97ED06D21CBD3F46006919B1 /* TitleTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,10 @@
 		97D5B8201CB9787700ADEF0D /* ToDoItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToDoItemTableViewCell.m; sourceTree = "<group>"; };
 		97D5B8221CB97D0700ADEF0D /* ToDoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToDoItem.h; sourceTree = "<group>"; };
 		97D5B8231CB97D0700ADEF0D /* ToDoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToDoItem.m; sourceTree = "<group>"; };
+		97ED06CA1CBD39CE006919B1 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		97ED06CB1CBD39CE006919B1 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		97ED06D11CBD3F46006919B1 /* TitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleTableViewCell.h; sourceTree = "<group>"; };
+		97ED06D21CBD3F46006919B1 /* TitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,12 +75,8 @@
 			children = (
 				97D5B80B1CB9778E00ADEF0D /* AppDelegate.h */,
 				97D5B80C1CB9778E00ADEF0D /* AppDelegate.m */,
-				97D5B80E1CB9778E00ADEF0D /* ViewController.h */,
-				97D5B80F1CB9778E00ADEF0D /* ViewController.m */,
-				97D5B81F1CB9787700ADEF0D /* ToDoItemTableViewCell.h */,
-				97D5B8201CB9787700ADEF0D /* ToDoItemTableViewCell.m */,
-				97D08BE71CBA971700422185 /* DatePickerTableViewCell.h */,
-				97D08BE81CBA971700422185 /* DatePickerTableViewCell.m */,
+				97ED06CF1CBD3EE4006919B1 /* To Do List Scene */,
+				97ED06D01CBD3F10006919B1 /* Detail Scene */,
 				97D5B8221CB97D0700ADEF0D /* ToDoItem.h */,
 				97D5B8231CB97D0700ADEF0D /* ToDoItem.m */,
 				97D5B8111CB9778E00ADEF0D /* Main.storyboard */,
@@ -92,6 +94,46 @@
 				97D5B8091CB9778E00ADEF0D /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97ED06CD1CBD3E17006919B1 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				97D5B81F1CB9787700ADEF0D /* ToDoItemTableViewCell.h */,
+				97D5B8201CB9787700ADEF0D /* ToDoItemTableViewCell.m */,
+				97D08BE71CBA971700422185 /* DatePickerTableViewCell.h */,
+				97D08BE81CBA971700422185 /* DatePickerTableViewCell.m */,
+			);
+			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		97ED06CF1CBD3EE4006919B1 /* To Do List Scene */ = {
+			isa = PBXGroup;
+			children = (
+				97D5B80E1CB9778E00ADEF0D /* ViewController.h */,
+				97D5B80F1CB9778E00ADEF0D /* ViewController.m */,
+				97ED06CD1CBD3E17006919B1 /* Table View Cells */,
+			);
+			name = "To Do List Scene";
+			sourceTree = "<group>";
+		};
+		97ED06D01CBD3F10006919B1 /* Detail Scene */ = {
+			isa = PBXGroup;
+			children = (
+				97ED06CA1CBD39CE006919B1 /* DetailViewController.h */,
+				97ED06CB1CBD39CE006919B1 /* DetailViewController.m */,
+				97ED06D41CBD3F53006919B1 /* Table View Cells */,
+			);
+			name = "Detail Scene";
+			sourceTree = "<group>";
+		};
+		97ED06D41CBD3F53006919B1 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				97ED06D11CBD3F46006919B1 /* TitleTableViewCell.h */,
+				97ED06D21CBD3F46006919B1 /* TitleTableViewCell.m */,
+			);
+			name = "Table View Cells";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,8 +210,10 @@
 				97D08BE91CBA971700422185 /* DatePickerTableViewCell.m in Sources */,
 				97D5B8241CB97D0700ADEF0D /* ToDoItem.m in Sources */,
 				97D5B80D1CB9778E00ADEF0D /* AppDelegate.m in Sources */,
+				97ED06D31CBD3F46006919B1 /* TitleTableViewCell.m in Sources */,
 				97D5B8211CB9787700ADEF0D /* ToDoItemTableViewCell.m in Sources */,
 				97D5B80A1CB9778E00ADEF0D /* main.m in Sources */,
+				97ED06CC1CBD39CE006919B1 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
