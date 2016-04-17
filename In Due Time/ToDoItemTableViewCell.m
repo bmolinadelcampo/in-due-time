@@ -25,8 +25,6 @@
     self.titleLabel.text = nil;
     self.dueDateLabel.text = nil;
     self.dueByLabel.text = nil;
-    UIImage *initialCheckboxImage = [UIImage imageNamed:@"Unchecked Checkbox.png"];
-    [self.checkBoxButton setImage:initialCheckboxImage forState:UIControlStateNormal];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -40,8 +38,6 @@
     self.titleLabel.text = nil;
     self.dueDateLabel.text = nil;
     self.dueByLabel.text = nil;
-    UIImage *initialCheckboxImage = [UIImage imageNamed:@"Unchecked Checkbox.png"];
-    [self.checkBoxButton setImage:initialCheckboxImage forState:UIControlStateNormal];
 }
 
 @end

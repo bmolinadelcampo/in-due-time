@@ -61,7 +61,7 @@
                                                     </constraints>
                                                     <color key="tintColor" red="0.0" green="0.74117647058823533" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
-                                                        <action selector="changeCheckboxValue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Aw8-UQ-uiN"/>
+                                                        <action selector="changeCheckboxValue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2aj-3y-lY6"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -94,7 +94,7 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
-                                            <outlet property="checkBoxButton" destination="uM2-ST-yjc" id="F9L-zx-QfM"/>
+                                            <outlet property="checkboxButton" destination="uM2-ST-yjc" id="NBP-lg-2F0"/>
                                             <outlet property="dueByLabel" destination="4RW-oV-RyC" id="S1j-Nq-hwo"/>
                                             <outlet property="dueDateLabel" destination="mv2-Cc-xQr" id="6ur-sM-j6i"/>
                                             <outlet property="titleLabel" destination="QFY-EB-nvf" id="iSo-ep-zwJ"/>
@@ -200,8 +200,6 @@
                                                     <color key="tintColor" red="0.0" green="0.74117647060000003" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="changeCheckboxValue:" destination="cfc-IZ-8dH" eventType="touchUpInside" id="76v-cN-SdM"/>
-                                                        <action selector="changeCheckboxValue:" destination="bns-Ll-3XJ" eventType="touchUpInside" id="TgJ-Yu-xTN"/>
-                                                        <action selector="changeCheckboxValue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Z9Z-AN-aL7"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

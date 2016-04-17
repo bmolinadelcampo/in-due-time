@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueByLabel;
-@property (weak, nonatomic) IBOutlet UIButton *checkBoxButton;
+@property (weak, nonatomic) IBOutlet UIButton *checkboxButton;
 
 @property (strong ,nonatomic) ToDoItem *toDoItem;
 

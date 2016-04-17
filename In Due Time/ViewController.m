@@ -36,7 +36,6 @@
     [super viewDidLoad];
     
     NSURL *filePathURL = [self pathToFile];
-//    self.toDoListArray = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathToFile].absoluteString];
     
     if ([[[NSFileManager alloc] init] fileExistsAtPath:[filePathURL path]]) {
         self.toDoListArray = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathToFile].path];
@@ -50,6 +49,8 @@
     self.hasInlinePicker = NO;
     self.datePickerIndexPath = nil;
 }
+
+#pragma mark - UITableViewDataSourceDelegate Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -89,43 +90,21 @@
     ToDoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"toDoItemCell"];
     cell.toDoItem = toDoItem;
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
+    if (cell.toDoItem.isChecked) {
+        UIImage *checkedCheckboxImage = [UIImage imageNamed:@"Checked Checkbox.png"];
+        [cell.checkboxButton setImage:checkedCheckboxImage forState:normal];
+        
+    }else{
+        UIImage *uncheckedCheckboxImage = [UIImage imageNamed:@"Unchecked Checkbox.png"];
+        [cell.checkboxButton setImage:uncheckedCheckboxImage forState:normal];
+    }
+    
     return cell;
 }
 
-- (IBAction)addNewItem:(id)sender {
-
-    UIAlertController *addNewItemAlertController = [UIAlertController alertControllerWithTitle:@"New ToDo" message:@"Add a title for your new ToDo. Then you can tap on it to set a due date." preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:@"Cancel"
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       NSLog(@"Cancel action");
-                                   }];
-    
-    [addNewItemAlertController addAction:cancelAction];
-    
-    UIAlertAction *addAction = [UIAlertAction
-                               actionWithTitle:@"Add"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction *action)
-                               {
-                                   ToDoItem *newItem = [ToDoItem new];
-                                   newItem.title = addNewItemAlertController.textFields.firstObject.text;
-                                   [self.toDoListArray addObject:newItem];
-                                   [self.tableView reloadData];
-                               }];
-    [addNewItemAlertController addAction:addAction];
-    
-    [addNewItemAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
-        
-        textField.placeholder = @"Title";
-        NSLog(@"Textfield configuration Handler");
-    }];
-    
-    [self presentViewController:addNewItemAlertController animated:YES completion:nil];
-    
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"showDetail" sender:[tableView cellForRowAtIndexPath:indexPath]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -139,6 +118,95 @@
     return 60;
 }
 
+#pragma mark - IBAction Methods
+
+- (IBAction)changeCheckboxValue:(id)sender
+{
+    CGPoint checkboxPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:checkboxPosition];
+    ToDoItemTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    if (!cell.toDoItem.isChecked) {
+        UIImage *checkedCheckboxImage = [UIImage imageNamed:@"Checked Checkbox.png"];
+        [cell.checkboxButton setImage:checkedCheckboxImage forState:normal];
+        cell.toDoItem.isChecked = YES;
+        
+    }else{
+        UIImage *uncheckedCheckboxImage = [UIImage imageNamed:@"Unchecked Checkbox.png"];
+        [cell.checkboxButton setImage:uncheckedCheckboxImage forState:normal];
+        cell.toDoItem.isChecked = NO;
+    }
+}
+
+- (IBAction)setDueDate:(UIDatePicker *)sender
+{
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setTimeZone:[NSTimeZone defaultTimeZone]];
+    [dateFormatter setDateFormat:@"MMM dd, yyyy HH:mm"];
+    
+    ToDoItem *currentToDoItem = self.toDoListArray[self.datePickerIndexPath.row];
+    
+    currentToDoItem.dueDate = [dateFormatter stringFromDate:sender.date];
+    
+    [self.tableView reloadData];
+}
+
+- (IBAction)addNewItem:(id)sender {
+    
+    UIAlertController *addNewItemAlertController = [UIAlertController alertControllerWithTitle:@"New ToDo" message:@"Add a title for your new ToDo. Then you can tap on it to set a due date." preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    
+    [addNewItemAlertController addAction:cancelAction];
+    
+    UIAlertAction *addAction = [UIAlertAction
+                                actionWithTitle:@"Add"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction *action)
+                                {
+                                    ToDoItem *newItem = [ToDoItem new];
+                                    newItem.title = addNewItemAlertController.textFields.firstObject.text;
+                                    [self.toDoListArray addObject:newItem];
+                                    [self.tableView reloadData];
+                                }];
+    [addNewItemAlertController addAction:addAction];
+    
+    [addNewItemAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
+        
+        textField.placeholder = @"Title";
+        NSLog(@"Textfield configuration Handler");
+    }];
+    
+    [self presentViewController:addNewItemAlertController animated:YES completion:nil];
+    
+}
+
+#pragma mark - UITableViewDelegate Methods
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    ToDoItemTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (cell.toDoItem.isChecked && !self.hasInlinePicker) {
+        return YES;
+        
+    }else{
+        return NO;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.toDoListArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -148,6 +216,21 @@
     }else{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+}
+
+#pragma mark - Private Methods
+
+- (NSURL *)pathToFile
+{
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSError *err;
+    NSURL *documentURL = [fileManager URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&err];
+    return [documentURL URLByAppendingPathComponent:kFileName];
+}
+
+- (void)applicationDidEnterBackground: (NSNotification *)notification
+{
+    [NSKeyedArchiver archiveRootObject:self.toDoListArray toFile:[self pathToFile].path];
 }
 
 - (void)displayInlineDatePickerForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -197,78 +280,29 @@
     [self.tableView endUpdates];
 }
 
-- (IBAction)setDueDate:(UIDatePicker *)sender
+#pragma mark - UIStoryboard Methods
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setTimeZone:[NSTimeZone defaultTimeZone]];
-    [dateFormatter setDateFormat:@"MMM dd, yyyy HH:mm"];
-    
-    ToDoItem *currentToDoItem = self.toDoListArray[self.datePickerIndexPath.row];
-    
-    currentToDoItem.dueDate = [dateFormatter stringFromDate:sender.date];
-    
+    if ([segue.identifier isEqualToString:@"showDetail"]) {
+        DetailViewController *destinationViewController = segue.destinationViewController;
+        destinationViewController.toDoItem = ((ToDoItemTableViewCell *)sender).toDoItem;
+        destinationViewController.originCellIndexPath = [self.tableView indexPathForCell:sender];
+        
+        destinationViewController.delegate = self;
+    }
+}
+
+#pragma mark - Delegate Methods
+
+
+- (void)upadateToDoItem:(ToDoItem *)updatedToDoItem forCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    ToDoItemTableViewCell *cellToUpdate = [self.tableView cellForRowAtIndexPath:indexPath];
+    cellToUpdate.toDoItem = updatedToDoItem;
     [self.tableView reloadData];
 }
 
-- (IBAction)changeCheckboxValue:(id)sender
-{
-    CGPoint checkboxPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:checkboxPosition];
-    ToDoItemTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    
-    if (!cell.toDoItem.isChecked) {
-        UIImage *checkedCheckboxImage = [UIImage imageNamed:@"Checked Checkbox.png"];
-        [cell.checkBoxButton setImage:checkedCheckboxImage forState:normal];
-        cell.toDoItem.isChecked = YES;
-        
-    }else{
-        UIImage *uncheckedCheckboxImage = [UIImage imageNamed:@"Unchecked Checkbox.png"];
-        [cell.checkBoxButton setImage:uncheckedCheckboxImage forState:normal];
-        cell.toDoItem.isChecked = NO;
-    }
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    ToDoItemTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if (cell.toDoItem.isChecked && !self.hasInlinePicker) {
-        return YES;
-        
-    }else{
-        return NO;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.toDoListArray removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
-
-- (NSURL *)pathToFile
-{
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    NSError *err;
-    NSURL *documentURL = [fileManager URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&err];
-    return [documentURL URLByAppendingPathComponent:kFileName];
-}
-
-- (void)applicationDidEnterBackground: (NSNotification *)notification
-{
-    [NSKeyedArchiver archiveRootObject:self.toDoListArray toFile:[self pathToFile].path];
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    [self performSegueWithIdentifier:@"showDetail" sender:[tableView cellForRowAtIndexPath:indexPath]];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(ToDoItemTableViewCell *)sender
-{
-    DetailViewController *destinationViewController = segue.destinationViewController;
-    destinationViewController.toDoItem = sender.toDoItem;
-}
 
 
 @end

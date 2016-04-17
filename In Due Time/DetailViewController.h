@@ -9,8 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "ToDoItem.h"
 
-@interface DetailViewController : UIViewController
+@protocol SendDataBack <NSObject>
+
+- (void)upadateToDoItem:(ToDoItem *)updatedToDoItem forCellAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
+@interface DetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) ToDoItem *toDoItem;
+@property (strong, nonatomic) NSIndexPath *originCellIndexPath;
+
+@property (weak, nonatomic) id <SendDataBack> delegate;
 
 @end
